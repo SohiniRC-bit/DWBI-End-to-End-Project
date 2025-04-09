@@ -1,0 +1,197 @@
+create database test_db;
+create schema test_db_schema;
+--create tables
+CREATE TABLE DIMDATE(
+DateID INT PRIMARY KEY,
+Date DATE,
+DayofWeek VARCHAR(10),
+Month VARCHAR(10),
+Quarter INT,
+Year INT,
+isWeekend BOOLEAN
+);
+
+CREATE TABLE DimLoyaltyProgram(
+LoyaltyProgramID INT PRIMARY KEY,
+ProgramName VARCHAR(100),
+ProgramTier VARCHAR(50),
+PointsAccured INT
+);
+
+CREATE TABLE DIMCUSTOMER(
+CustomerID INT PRIMARY KEY autoincrement start 1 increment 1,
+FirstName VARCHAR(100),
+LastName VARCHAR(100),
+Gender  VARCHAR(100),
+DateofBirth DATE,
+Email VARCHAR(100),
+PhoneNumber VARCHAR(100),
+Address VARCHAR(100),
+City VARCHAR(100),
+State VARCHAR(100),
+ZipCode VARCHAR(100),
+Country VARCHAR(100),
+LoyaltyInfoID INT
+);
+
+SELECT * from DIMCUSTOMER;
+
+CREATE TABLE DIMPRODUCT(
+ProductID INT PRIMARY KEY autoincrement start 1 increment 1,
+ProductName VARCHAR(100),
+Category VARCHAR(50),
+BrandName VARCHAR(50),
+UnitPrice DECIMAL(10,2)
+);
+
+CREATE TABLE DIMSTORE(
+StoreID INT PRIMARY KEY autoincrement start 1 increment 1,
+StoreName VARCHAR(200),
+StoreType VARCHAR(100),
+StoreOpeningDate DATE,
+Address VARCHAR(255),
+City VARCHAR(200),
+State VARCHAR(200),
+Country VARCHAR(200),
+Region VARCHAR(200),
+ManagerName VARCHAR(200)
+);
+
+CREATE TABLE FACTORDERS(
+OrderID INT PRIMARY KEY autoincrement start 1 increment 1,
+DateID INT,
+ProductID INT,
+StoreID INT,
+CustomerID INT,
+QuantityOrdered INT,
+OrderedAmount DECIMAL(10,2),
+DiscountAmount DECIMAL(10,2),
+ShippingCost DECIMAL(10,2),
+TotalAmount DECIMAL(10,2),
+FOREIGN KEY (DateID) REFERENCES DIMDATE(DateID),
+FOREIGN KEY (CustomerID) REFERENCES DIMCUSTOMER(CustomerID),
+FOREIGN KEY (ProductID) REFERENCES DIMPRODUCT(ProductID),
+FOREIGN KEY (StoreID) REFERENCES DIMSTORE(StoreID)
+);
+
+CREATE OR REPLACE FILE FORMAT CSV_SOURCE_FILE_FORMAT
+TYPE= 'CSV'
+SKIP_HEADER=1
+FIELD_OPTIONALLY_ENCLOSED_BY= '"'
+DATE_FORMAT= 'YYYY-MM-DD';
+
+CREATE OR REPLACE STAGE TESTSTAGE;
+
+--run for local using snowsql
+-- PUT 'file://C:/Users/sohin/Desktop/DWBI Project/One Time Load/DimLoyalty/LoyaltyProgramInfo.csv' @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DimLoyaltyInfo/ AUTO_COMPRESS=FALSE;
+-- PUT 'file://C:/Users/sohin/Desktop/DWBI Project/One Time Load/DimCustomer/DimCustomerData.csv' @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DimCustomer/ AUTO_COMPRESS=FALSE;
+-- PUT 'file://C:/Users/sohin/Desktop/DWBI Project/One Time Load/DimDate/DIMDATE.csv' @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMDATE/ AUTO_COMPRESS=FALSE;
+-- PUT 'file://C:/Users/sohin/Desktop/DWBI Project/One Time Load/DimProduct/DIMPRODUCT.csv' @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMPRODUCT/ AUTO_COMPRESS=FALSE;
+-- PUT 'file://C:/Users/sohin/Desktop/DWBI Project/One Time Load/DimStore/DIMSTORE.csv' @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMSTORE/ AUTO_COMPRESS=FALSE;
+
+--PUT 'file://C:/Users/sohin/Desktop/DWBI Project/One Time Load/FactOrders/factorders.csv' @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/factorders/ AUTO_COMPRESS=FALSE;
+--PUT 'file://C:/Users/sohin/store_data/*.csv' @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/store_data/ AUTO_COMPRESS=FALSE;
+
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/store_data/;
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DimCustomerData/;
+
+COPY INTO FactOrders(DateID, CustomerID, ProductID, StoreID, QuantityOrdered, OrderedAmount, ShippingCost, DiscountAmount, TotalAmount)
+FROM @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/store_data/
+FILE_FORMAT= (FORMAT_NAME ='CSV_SOURCE_FILE_FORMAT')
+PURGE=FALSE;
+
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/store_data/;
+
+SHOW STAGES IN SCHEMA TEST_DB.TEST_DB_SCHEMA;
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE;
+REMOVE @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE PATTERN='.*\.csv\.gz$';
+
+SELECT * FROM INFORMATION_SCHEMA.STAGES WHERE STAGE_NAME = 'TESTSTAGE';
+
+COPY INTO DimLoyaltyProgram(LoyaltyProgramID,ProgramName,ProgramTier,PointsAccured)
+ from @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DimLoyalty/LoyaltyProgramInfo.csv
+ FILE_FORMAT= (FORMAT_NAME ='CSV_SOURCE_FILE_FORMAT');
+
+ SELECT * from DIMLOYALTYPROGRAM;
+
+ --
+
+SELECT 
+    FILE_NAME,
+    ERROR_COUNT,
+    FIRST_ERROR_MESSAGE,
+    FIRST_ERROR_LINE_NUMBER,
+    STATUS
+FROM SNOWFLAKE.ACCOUNT_USAGE.LOAD_HISTORY
+WHERE SCHEMA_NAME = 'TEST_DB_SCHEMA'
+  AND TABLE_NAME = 'DIMCUSTOMER'
+ORDER BY LAST_LOAD_TIME DESC;
+
+CREATE OR REPLACE FILE FORMAT CSV_SOURCE_FILE_FORMAT 
+  TYPE = 'CSV'
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"' 
+  FIELD_DELIMITER = ',' 
+  SKIP_HEADER = 1 
+  DATE_FORMAT = 'YYYY-MM-DD';  -- Match the format in your CSV file
+
+COPY INTO DIMCUSTOMER (CustomerID, FirstName, LastName, Gender, DateofBirth, Email, PhoneNumber, Address, City, State, Country, ZipCode, LoyaltyInfoID)
+FROM @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DimCustomer/DimCustomerData.csv
+FILE_FORMAT = (FORMAT_NAME = 'CSV_SOURCE_FILE_FORMAT')
+ON_ERROR = 'CONTINUE';
+
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE;
+
+DESCRIBE TABLE DIMCUSTOMER;
+
+ LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DimCustomer/;
+
+ SELECT * from DIMCUSTOMER;
+
+ 
+COPY INTO DIMPRODUCT(ProductID, ProductName, Category, BrandName, UnitPrice)
+FROM @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMPRODUCT/DIMPRODUCT.csv
+FILE_FORMAT = (FORMAT_NAME = 'CSV_SOURCE_FILE_FORMAT')
+ON_ERROR = 'CONTINUE';
+
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMPRODUCT/;
+SELECT * FROM DIMPRODUCT;
+DESCRIBE TABLE DIMPRODUCT;
+
+COPY INTO DIMDATE(DateID, Date, DayofWeek, Month, Quarter, Year, isWeekend)
+FROM @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMDATE/DIMDATE.csv
+FILE_FORMAT = (FORMAT_NAME = 'CSV_SOURCE_FILE_FORMAT', 
+               DATE_FORMAT = 'MM/DD/YY');
+
+
+
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMDATE/;
+SELECT * FROM DIMDATE;
+
+
+COPY INTO DIMSTORE(StoreID, StoreName, StoreType, StoreOpeningDate, Address, City, State, Country, Region, ManagerName)
+FROM @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMSTORE/DIMSTORE.csv
+FILE_FORMAT = (FORMAT_NAME = 'CSV_SOURCE_FILE_FORMAT', 
+               DATE_FORMAT = 'YYYY-MM-DD'); 
+
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/DIMSTORE/;
+SELECT * FROM DIMSTORE;
+
+COPY INTO FactOrders(DateID, CustomerID, ProductID, StoreID, QuantityOrdered, OrderedAmount, ShippingCost, DiscountAmount, TotalAmount)
+FROM @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/store_data/;
+FILE_FORMAT= (FORMAT_NAME ='CSV_SOURCE_FILE_FORMAT');
+
+LIST @TEST_DB.TEST_DB_SCHEMA.TESTSTAGE/store_data/;
+
+SELECT * FROM FACTORDERS LIMIT 100;
+
+
+--Create a new user
+CREATE OR REPLACE USER Test_PowerBI_User
+PASSWORD= 'Test_PowerBI_User'
+Login_Name= 'PowerBI User'
+Default_Role= 'ACCOUNTADMIN'
+Default_Warehouse= 'COMPUTE_WH'
+Must_Change_Password= TRUE;
+
+grant role accountadmin To user Test_PowerBI_User;
+
