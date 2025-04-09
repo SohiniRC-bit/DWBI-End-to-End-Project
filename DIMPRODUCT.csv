@@ -1,0 +1,101 @@
+ProductID,ProductName,Category,BrandName,UnitPrice
+91235469,Smartphone,Automotive,FakeDiamond,347.42
+3793233,Headphones,Home Appliances,FakeLakme,241.78
+83027367,Tablet,Home Appliances,FakeMax,11.04
+65316278,Headphones,Home Appliances,FakeMax,152.44
+59938776,Mouse,Electronics,FakeZudio,118.27
+4612747,Headphones,Toys,FakeZudio,253.99
+63974210,Mouse,Furniture,FakeMax,31.93
+93243819,Smartwatch,Electronics,FakeSundown,94.48
+17285594,Smartwatch,Electronics,FakeSundown,282.29
+34610607,Keyboard,Food,FakeSundown,471.43
+79466856,Tablet,Beauty,FakeMax,111.28
+41462179,Keyboard,Home Appliances,FakeLakme,220.26
+34842858,Monitor,Automotive,FakeZudio,180.33
+92404207,Headphones,Automotive,FakeMax,200.84
+67676652,Monitor,Toys,FakeMax,383.24
+77041431,Smartphone,Automotive,FakeZudio,452.57
+52766783,Monitor,Automotive,FakeMax,77.52
+91164685,Laptop,Sports,FakeLakme,92.47
+39221619,Laptop,Beauty,FakeDiamond,447.4
+52679330,Smartwatch,Furniture,FakeMax,65.57
+66846476,Smartphone,Sports,FakeDiamond,395.55
+17937366,Monitor,Books,FakeZudio,413.86
+28867173,Smartphone,Clothing,FakeZudio,379.56
+33282604,Monitor,Sports,FakeSundown,330.88
+21177861,Keyboard,Home Appliances,FakeMax,432.98
+11098916,Monitor,Clothing,FakeLakme,443.61
+85668728,Tablet,Furniture,FakeLakme,364.76
+20912869,Smartphone,Clothing,FakeLakme,364.79
+49537778,Mouse,Furniture,FakeMax,497.55
+98450248,Printer,Home Appliances,FakeZudio,171.27
+6321126,Tablet,Clothing,FakeMax,173.71
+57040626,Headphones,Automotive,FakeDiamond,153.02
+73189220,Laptop,Books,FakeMax,43.03
+93327510,Laptop,Toys,FakeSundown,449.75
+17118077,Laptop,Furniture,FakeDiamond,339.04
+90860781,Smartphone,Automotive,FakeDiamond,79.44
+53731059,Monitor,Toys,FakeMax,484.25
+83877310,Camera,Electronics,FakeZudio,123.03
+74056179,Printer,Books,FakeLakme,240.83
+68607545,Mouse,Food,FakeDiamond,342.19
+36713197,Mouse,Electronics,FakeSundown,305.96
+9891787,Monitor,Furniture,FakeDiamond,99.65
+80277417,Printer,Books,FakeLakme,33.07
+28536385,Headphones,Furniture,FakeDiamond,275.75
+55496,Monitor,Toys,FakeMax,489.93
+40027885,Smartwatch,Furniture,FakeDiamond,217.37
+84952807,Printer,Home Appliances,FakeMax,60.25
+72236709,Monitor,Beauty,FakeMax,146.34
+13781,Laptop,Home Appliances,FakeLakme,398.22
+95956058,Tablet,Home Appliances,FakeDiamond,238.11
+77770011,Monitor,Clothing,FakeZudio,374.23
+28821843,Smartwatch,Clothing,FakeZudio,451
+79428530,Smartphone,Food,FakeLakme,193.13
+30526519,Keyboard,Beauty,FakeLakme,386.7
+19387084,Headphones,Food,FakeZudio,153.61
+80077683,Printer,Food,FakeZudio,109.89
+36679547,Headphones,Automotive,FakeMax,338.52
+5160614,Printer,Beauty,FakeDiamond,225.14
+60773337,Keyboard,Automotive,FakeMax,166.79
+78223303,Headphones,Electronics,FakeMax,474.18
+40882951,Keyboard,Electronics,FakeSundown,64.08
+73332403,Smartphone,Sports,FakeMax,358.75
+32492148,Tablet,Electronics,FakeLakme,244.71
+3725308,Smartphone,Clothing,FakeLakme,35.35
+63060075,Printer,Toys,FakeZudio,391.93
+25650256,Smartphone,Food,FakeZudio,405.11
+55624421,Smartphone,Clothing,FakeDiamond,214.92
+1040193,Laptop,Beauty,FakeSundown,106.44
+80885388,Smartwatch,Home Appliances,FakeMax,226.25
+22799029,Smartphone,Automotive,FakeLakme,373.57
+55021893,Monitor,Electronics,FakeLakme,91.07
+79392648,Camera,Electronics,FakeZudio,422.51
+24187118,Keyboard,Beauty,FakeZudio,290.4
+9568880,Smartwatch,Clothing,FakeSundown,327.14
+69659530,Mouse,Beauty,FakeLakme,179.34
+82063772,Tablet,Clothing,FakeZudio,69.45
+1626573,Mouse,Food,FakeDiamond,43.61
+32186603,Tablet,Furniture,FakeSundown,170.57
+57186776,Camera,Clothing,FakeDiamond,300.78
+37602899,Printer,Automotive,FakeSundown,425.79
+25144001,Printer,Furniture,FakeLakme,20.54
+60193166,Mouse,Toys,FakeDiamond,41.89
+29883276,Smartphone,Electronics,FakeSundown,374.03
+57368558,Smartphone,Food,FakeZudio,309.64
+46617388,Monitor,Books,FakeMax,40.24
+3163470,Mouse,Food,FakeDiamond,69.12
+88907468,Laptop,Sports,FakeLakme,224.08
+98228877,Camera,Beauty,FakeZudio,191.22
+64240997,Monitor,Books,FakeDiamond,193.93
+20183368,Camera,Clothing,FakeSundown,360.27
+87676026,Laptop,Food,FakeMax,306.31
+85516682,Smartphone,Home Appliances,FakeMax,333.24
+40014440,Tablet,Toys,FakeDiamond,53.3
+93017643,Smartphone,Electronics,FakeLakme,222.87
+95732480,Monitor,Furniture,FakeSundown,148.4
+19748103,Laptop,Furniture,FakeDiamond,334.69
+55876330,Printer,Home Appliances,FakeLakme,346.26
+82198211,Smartwatch,Sports,FakeDiamond,67.33
+83985740,Tablet,Automotive,FakeDiamond,302.95
+86405805,Laptop,Food,FakeMax,158.93
